@@ -31,35 +31,28 @@ module.exports = function(app) {
 
   app.delete("/api/notes/:id", function(req, res) {
 
-    console.log(req.params.id);
+   let removedID = req.params.id;
+   console.log(removedID);
 
+    const newNotes = notesData.filter(function(data) {
+      return data.id != removedID;
+    });
 
-    const newNotes = notesData.filter(note => note.id === req.params.id);
     console.log(newNotes);
 
-  //  for (let index = 0; index < notesData.length; index++) {
-  //    if (notesData[index].id!==req.params.id) {
-  //      console.log(notesData[index].id);
-  //      console.log(req.params.id);
-  //      newNotes.push(notesData[index]);
-  //    }
-     
-  //  }
+   let notes = JSON.stringify(newNotes);
 
-  //  console.log(newNotes);
-
-  //  let notes = JSON.stringify(newNotes);
-
-  //     fs.writeFile("db/db.json", notes, (err) => {
-  //       if (err) {
-  //           throw err;
-  //       }
-  //       console.log("JSON data is saved.");
-  //   });
+      fs.writeFile("db/db.json", notes, (err) => {
+        if (err) {
+            throw err;
+        }
+        console.log("JSON data is saved.");
+    });
 
 
       res.json(true);
   });
+
 
 
 };
